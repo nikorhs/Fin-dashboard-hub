@@ -1,0 +1,3 @@
+﻿Private Entrepreneur
+Amount: Number of opened sole proprietorships 
+Total: Total bonus amount accrued for opened sole proprietorships

@@ -1,0 +1,4 @@
+﻿Interview
+Company: Number of companies that conducted interviews.
+Employee: Number of employees who were interviewed.
+Status "Hired": Number of hired employees who were interviewed.

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>September 2025 Monthly Business Report</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .header p { font-size: 1.2em; opacity: 0.9; }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card.hr { border-left-color: #3498db; }
+        .card.finance { border-left-color: #27ae60; }
+        .card.sales { border-left-color: #e74c3c; }
+        .card.calls { border-left-color: #f39c12; }
+        .card.employees { border-left-color: #9b59b6; }
+        .card.additional { border-left-color: #e67e22; }
+        .card-header { display: flex; align-items: center; margin-bottom: 15px; }
+        .card-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px; font-size: 20px; color: white;
+        }
+        .card.hr .card-icon { background: #3498db; }
+        .card.finance .card-icon { background: #27ae60; }
+        .card.sales .card-icon { background: #e74c3c; }
+        .card.calls .card-icon { background: #f39c12; }
+        .card.employees .card-icon { background: #9b59b6; }
+        .card.additional .card-icon { background: #e67e22; }
+        .card h3 { color: #2c3e50; font-size: 1.3em; }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .metric:last-child { border-bottom: none; }
+        .metric-label { color: #7f8c8d; font-size: 0.95em; }
+        .metric-value { font-weight: bold; color: #2c3e50; }
+        .positive { color: #27ae60; }
+        .negative { color: #e74c3c; }
+        .charts-section { padding: 30px; background: white; }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .chart-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: 400px;
+        }
+        .chart-title {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .comparison-section { padding: 30px; background: #f8f9fa; }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .comparison-table th {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .comparison-table td { padding: 12px 15px; border-bottom: 1px solid #eee; }
+        .comparison-table tr:hover { background: #f8f9fa; }
+        .section-title {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .charts-grid, .summary-cards { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>September 2025 Monthly Business Report</h1>
+            <p>Stabilization period with zero sales but strong cash position</p>
+        </div>
+
+        <div class="summary-cards">
+            <div class="card hr">
+                <div class="card-header">
+                    <div class="card-icon">👥</div>
+                    <h3>Human Resources</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">New Employees Hired</span>
+                    <span class="metric-value">10</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Employees Started</span>
+                    <span class="metric-value">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">New Employee Salaries</span>
+                    <span class="metric-value">$3,090.96</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">HR Video Candidates</span>
+                    <span class="metric-value">112</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Cost per Employee</span>
+                    <span class="metric-value">$1,030.32</span>
+                </div>
+            </div>
+
+            <div class="card employees">
+                <div class="card-header">
+                    <div class="card-icon">📉</div>
+                    <h3>Employee Growth</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Employees</span>
+                    <span class="metric-value negative">78</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Departures</span>
+                    <span class="metric-value">10 (12.8%)</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Employees Left</span>
+                    <span class="metric-value">5 (6.4%)</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Employees Fired</span>
+                    <span class="metric-value">5 (6.4%)</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Fired from Projects</span>
+                    <span class="metric-value">2</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Net Growth</span>
+                    <span class="metric-value negative">-10 (-11.4%)</span>
+                </div>
+            </div>
+
+            <div class="card calls">
+                <div class="card-header">
+                    <div class="card-icon">📞</div>
+                    <h3>Call Activities</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Calls</span>
+                    <span class="metric-value">24</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Leadgen Calls</span>
+                    <span class="metric-value">24</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Lead Price</span>
+                    <span class="metric-value">$144.43</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Manager Bonuses</span>
+                    <span class="metric-value">₴8,400.00</span>
+                </div>
+            </div>
+
+            <div class="card sales">
+                <div class="card-header">
+                    <div class="card-icon">💰</div>
+                    <h3>Sales Performance</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Companies</span>
+                    <span class="metric-value negative">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">NEW Companies</span>
+                    <span class="metric-value negative">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Employees Hired</span>
+                    <span class="metric-value negative">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Revenue</span>
+                    <span class="metric-value negative">$0.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Project Profit</span>
+                    <span class="metric-value negative">$0</span>
+                </div>
+            </div>
+
+            <div class="card finance">
+                <div class="card-header">
+                    <div class="card-icon">💳</div>
+                    <h3>Financial Overview</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Revenue</span>
+                    <span class="metric-value">$43,237.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Received</span>
+                    <span class="metric-value">$50,509.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Balance</span>
+                    <span class="metric-value positive">$2,146.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Salaries Paid</span>
+                    <span class="metric-value">$31,325.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Cash Position</span>
+                    <span class="metric-value positive">$9,418.00</span>
+                </div>
+            </div>
+
+            <div class="card additional">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <h3>Additional Metrics</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Project Bonuses</span>
+                    <span class="metric-value">₴64,250.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Employee Bonuses</span>
+                    <span class="metric-value">$4,000.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Lifetime Profit (Departed)</span>
+                    <span class="metric-value positive">$16,067.75</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <h2 class="section-title">Performance Analytics</h2>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3 class="chart-title">Monthly Hiring Trends</h3>
+                    <canvas id="hiringChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">Employee Departures (September)</h3>
+                    <canvas id="departuresChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">Revenue vs Expenses</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 class="chart-title">Call Activities Trend</h3>
+                    <canvas id="callsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-section">
+            <h2 class="section-title">Month-over-Month Comparison (Jan-Sep 2025)</h2>
+            <div style="overflow-x: auto;">
+                <table class="comparison-table" style="min-width: 1600px;">
+                    <thead>
+                        <tr>
+                            <th style="min-width: 200px;">Metric</th>
+                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th><th>Aug</th><th>Sep</th><th>Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Total Employees</strong></td>
+                            <td>90</td><td>99</td><td>85</td><td>72</td><td>65</td><td>71</td><td>76</td><td>88</td>
+                            <td class="highlight">78</td>
+                            <td>↘ Declined 11%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Employees Hired</strong></td>
+                            <td>4</td><td>15</td><td>1</td><td>3</td><td>6</td><td>7</td><td>17</td><td>26</td>
+                            <td class="highlight">10</td>
+                            <td>↘ 62% drop</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Employees Started</strong></td>
+                            <td>3</td><td>10</td><td>1</td><td>2</td><td>6</td><td>4</td><td>8</td><td>17</td>
+                            <td class="highlight">3</td>
+                            <td>↘ 82% drop</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Companies (Sales)</strong></td>
+                            <td>2</td><td>5</td><td>2</td><td>3</td><td>4</td><td>3</td><td>2</td><td>2</td>
+                            <td class="highlight">0</td>
+                            <td>↘ ZERO</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NEW Companies</strong></td>
+                            <td>2</td><td>4</td><td>2</td><td>3</td><td>1</td><td>3</td><td>1</td><td>1</td>
+                            <td class="highlight">0</td>
+                            <td>↘ ZERO</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sales Revenue</strong></td>
+                            <td>$2,231</td><td>$5,056</td><td>$2,573</td><td>$3,911</td><td>$6,885</td><td>$6,625</td><td>$3,048</td><td>$5,026</td>
+                            <td class="highlight">$0</td>
+                            <td>↘ CRITICAL</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Calls</strong></td>
+                            <td>38</td><td>56</td><td>37</td><td>23</td><td>27</td><td>19</td><td>14</td><td>21</td>
+                            <td class="highlight">24</td>
+                            <td>↗ 14% up</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lead Price</strong></td>
+                            <td>$108</td><td>$84</td><td>$118</td><td>$109</td><td>$128</td><td>$131</td><td>$182</td><td>$214</td>
+                            <td class="highlight">$144</td>
+                            <td>↘ 33% down</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cash Position</strong></td>
+                            <td>-$2,707</td><td>-$8,158</td><td>$5,709</td><td>-$2,514</td><td>$17,283</td><td>$12</td><td>$170</td><td>$4,290</td>
+                            <td class="highlight">$9,418</td>
+                            <td>↗ Best YTD!</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Balance</strong></td>
+                            <td>-$770</td><td>-$1,907</td><td>$495</td><td>$2,385</td><td>$4,221</td><td>$5,254</td><td>$7,217</td><td>$1,358</td>
+                            <td class="highlight">$2,146</td>
+                            <td>↗ 58% up</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <h2 class="section-title">Executive Summary & Strategic Insights</h2>
+            <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 30px;">
+                    
+                    <div style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 25px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.4em;">🎯 September Highlights</h3>
+                        <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li style="margin-bottom: 8px;"><strong>Best Cash Position:</strong> $9,418 - highest year-to-date</li>
+                            <li style="margin-bottom: 8px;"><strong>Strong Inflow:</strong> $50,509 received (9% higher than August)</li>
+                            <li style="margin-bottom: 8px;"><strong>Improved Balance:</strong> $2,146 positive (+58% from August)</li>
+                            <li style="margin-bottom: 8px;"><strong>Lower Lead Cost:</strong> $144 per lead (33% reduction)</li>
+                            <li><strong>Quality Departures:</strong> +$16,068 lifetime profit from departed</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 25px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.4em;">🚨 Critical Concerns</h3>
+                        <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li style="margin-bottom: 8px;"><strong>ZERO Sales:</strong> No companies, no clients, no revenue</li>
+                            <li style="margin-bottom: 8px;"><strong>ZERO Profit:</strong> No project profit generated</li>
+                            <li style="margin-bottom: 8px;"><strong>Hiring Collapse:</strong> Only 3 started (82% drop)</li>
+                            <li style="margin-bottom: 8px;"><strong>Workforce Shrinkage:</strong> Net -10 employees</li>
+                            <li><strong>Pipeline Decline:</strong> 112 candidates (32% down)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
+                    
+                    <div style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 25px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.4em;">💡 Key Observations</h3>
+                        <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li style="margin-bottom: 8px;"><strong>Financial Paradox:</strong> Best cash despite zero sales</li>
+                            <li style="margin-bottom: 8px;"><strong>Cost Reduction:</strong> Salaries down 13% to $31,325</li>
+                            <li style="margin-bottom: 8px;"><strong>Call Increase:</strong> 24 calls made but no conversion</li>
+                            <li><strong>Conversion Crisis:</strong> Only 30% of hires actually started</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #f39c12, #d35400); color: white; padding: 25px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.4em;">🎯 Urgent Actions</h3>
+                        <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li style="margin-bottom: 8px;"><strong>Sales Revival:</strong> Immediate focus on closing deals</li>
+                            <li style="margin-bottom: 8px;"><strong>Fix Hiring:</strong> Address 30% start rate problem</li>
+                            <li style="margin-bottom: 8px;"><strong>Pipeline Rebuild:</strong> Increase candidate quality</li>
+                            <li><strong>Strategic Review:</strong> Evaluate business model viability</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.1)); border-radius: 12px; border-left: 5px solid #e74c3c;">
+                    <h3 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.4em;">⚠️ September 2025 Summary</h3>
+                    <p style="line-height: 1.8; color: #2c3e50; margin: 0;">
+                        September presents a stark contradiction: the company achieved its best cash position of the year at $9,418 with strong inflows of $50,509, yet recorded zero sales activity—no companies engaged, no new clients, and no revenue for the first time. Hiring collapsed with only 3 employees starting (down 82% from August's 17), resulting in a net workforce reduction of 10 employees to 78 total. While improved lead costs ($144, down 33%) and positive lifetime profit from departed employees (+$16,068) show some bright spots, the complete absence of sales despite 24 calls made suggests fundamental pipeline or conversion problems. With stable revenue at $43,237 but shrinking operations and zero business development success, October must prioritize immediate sales revival and hiring recovery or risk further contraction despite strong cash reserves.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            // Monthly Hiring Trends
+            new Chart(document.getElementById('hiringChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        label: 'Hired',
+                        data: [4, 15, 1, 3, 6, 7, 17, 26, 10],
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Started',
+                        data: [3, 10, 1, 2, 6, 4, 8, 17, 3],
+                        borderColor: '#f39c12',
+                        backgroundColor: 'rgba(243, 156, 18, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top' } },
+                    scales: {
+                        y: { beginAtZero: true },
+                        x: {}
+                    }
+                }
+            });
+
+            // Employee Departures
+            new Chart(document.getElementById('departuresChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Left (5)', 'Fired (5)', 'Project Fired (2)', 'Active (66)'],
+                    datasets: [{
+                        data: [5, 5, 2, 66],
+                        backgroundColor: ['#f39c12', '#e74c3c', '#e67e22', '#27ae60']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // Revenue vs Expenses
+            new Chart(document.getElementById('revenueChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [42661, 46166, 44235, 39386, 42370, 43329, 44892, 43281, 43237],
+                        backgroundColor: '#27ae60'
+                    }, {
+                        label: 'Salaries',
+                        data: [35513, 36654, 33754, 29277, 27899, 30909, 31830, 35994, 31325],
+                        backgroundColor: '#e74c3c'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top' } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            // Call Activities Trend
+            new Chart(document.getElementById('callsChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        label: 'Total Calls',
+                        data: [38, 56, 37, 23, 27, 19, 14, 21, 24],
+                        borderColor: '#f39c12',
+                        backgroundColor: 'rgba(243, 156, 18, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top' } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

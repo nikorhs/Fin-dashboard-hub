@@ -1,0 +1,11 @@
+﻿Companies: Number of companies that made a purchase.
+Sales (unique NEW companies): Number of unique new companies that made a purchase.
+Hired employees: Number of employees hired.
+Revenue: Total sales amount for this month.
+Sales Bonus SM: Total accrued bonus for sales managers.
+Team leads bonuses: Bonuses for team leaders.
+USD Empl Salary: Total salary amount for hired employees in USD.
+Profit Project: Total profit for projects.
+LeadGen Manager: Number of lead generation managers who had a sale.
+LeadGen Bonus: Total bonus amount for lead generation managers for sales.
+Assistant Bonus: Total bonus amount for assistants.

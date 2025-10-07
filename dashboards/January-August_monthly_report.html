@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>August 2025 Monthly Business Report</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e74c3c 0%, #f39c12 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card.hr { border-left-color: #3498db; }
+        .card.finance { border-left-color: #27ae60; }
+        .card.sales { border-left-color: #e74c3c; }
+        .card.calls { border-left-color: #f39c12; }
+        .card.employees { border-left-color: #9b59b6; }
+        .card.additional { border-left-color: #e67e22; }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .card.hr .card-icon { background: #3498db; }
+        .card.finance .card-icon { background: #27ae60; }
+        .card.sales .card-icon { background: #e74c3c; }
+        .card.calls .card-icon { background: #f39c12; }
+        .card.employees .card-icon { background: #9b59b6; }
+        .card.additional .card-icon { background: #e67e22; }
+
+        .card h3 {
+            color: #2c3e50;
+            font-size: 1.3em;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #7f8c8d;
+            font-size: 0.95em;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .positive { color: #27ae60; }
+        .negative { color: #e74c3c; }
+
+        .charts-section {
+            padding: 30px;
+            background: white;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .chart-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: 400px;
+        }
+
+        .chart-container canvas {
+            max-height: 300px !important;
+        }
+
+        .chart-title {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .comparison-section {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .trend-up::after {
+            content: " ↗";
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .trend-down::after {
+            content: " ↘";
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 August 2025 Monthly Business Report</h1>
+            <p>Record-breaking hiring month with strategic organizational growth</p>
+        </div>
+
+        <div class="summary-cards">
+            <div class="card hr">
+                <div class="card-header">
+                    <div class="card-icon">👥</div>
+                    <h3>Human Resources</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">New Employees Hired</span>
+                    <span class="metric-value highlight">27</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Employees Started</span>
+                    <span class="metric-value">19</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">New Employee Salaries</span>
+                    <span class="metric-value">$8,898.19</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">HR Video Candidates</span>
+                    <span class="metric-value">164</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Cost per Employee (Started)</span>
+                    <span class="metric-value">₴7,257.33</span>
+                </div>
+            </div>
+
+            <div class="card employees">
+                <div class="card-header">
+                    <div class="card-icon">📈</div>
+                    <h3>Employee Growth</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Employees</span>
+                    <span class="metric-value positive">89</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Departures</span>
+                    <span class="metric-value">10 (11.2%)</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Employees Left</span>
+                    <span class="metric-value">3 (3.4%)</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Employees Fired</span>
+                    <span class="metric-value">7 (7.9%)</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Fired from Projects (FiredSync)</span>
+                    <span class="metric-value">4</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Average Months Worked</span>
+                    <span class="metric-value">9.8</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Net Employee Growth</span>
+                    <span class="metric-value positive">+17 (+23.6%)</span>
+                </div>
+            </div>
+
+            <div class="card calls">
+                <div class="card-header">
+                    <div class="card-icon">📞</div>
+                    <h3>Call Activities</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Calls</span>
+                    <span class="metric-value">21</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Leadgen Calls</span>
+                    <span class="metric-value">19</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Sales Manager Calls</span>
+                    <span class="metric-value">2</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Manager Bonuses</span>
+                    <span class="metric-value">₴7,600.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Lead Price</span>
+                    <span class="metric-value">$214.27</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">New Company Price</span>
+                    <span class="metric-value">$5,417.09</span>
+                </div>
+            </div>
+
+            <div class="card sales">
+                <div class="card-header">
+                    <div class="card-icon">💰</div>
+                    <h3>Sales Performance</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Unique Companies</span>
+                    <span class="metric-value">2</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Unique NEW Companies</span>
+                    <span class="metric-value">1</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Sales Quantity (Hired Employees)</span>
+                    <span class="metric-value">3</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Revenue</span>
+                    <span class="metric-value">$5,026.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Sales Manager Bonus</span>
+                    <span class="metric-value">$100.52</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Project Profit</span>
+                    <span class="metric-value">$4,154</span>
+                </div>
+            </div>
+
+            <div class="card finance">
+                <div class="card-header">
+                    <div class="card-icon">💳</div>
+                    <h3>Financial Overview</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Revenue</span>
+                    <span class="metric-value">$43,281.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Total Received</span>
+                    <span class="metric-value">$46,213.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Balance</span>
+                    <span class="metric-value positive">$1,358.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Salaries Full</span>
+                    <span class="metric-value">$35,994.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Cash Position</span>
+                    <span class="metric-value positive">$4,290.00</span>
+                </div>
+            </div>
+
+            <div class="card additional">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <h3>Additional Metrics</h3>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Project Bonuses</span>
+                    <span class="metric-value">₴62,150.00</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Employee Bonuses USD</span>
+                    <span class="metric-value">$2,668.30</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Lifetime Profit from Departed</span>
+                    <span class="metric-value positive">$6,584.49</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <h2 class="section-title">📈 Performance Analytics</h2>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3 class="chart-title">Monthly Hiring Trends</h3>
+                    <canvas id="hiringChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Employee Departures Breakdown (August)</h3>
+                    <canvas id="departuresChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Revenue vs Expenses</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Call Activities Trend</h3>
+                    <canvas id="callsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-section">
+            <h2 class="section-title">📊 Month-over-Month Comparison (January - August 2025)</h2>
+            <div style="overflow-x: auto;">
+                <table class="comparison-table" style="min-width: 1400px;">
+                    <thead>
+                        <tr>
+                            <th style="min-width: 220px;">Metric</th>
+                            <th>Jan</th>
+                            <th>Feb</th>
+                            <th>Mar</th>
+                            <th>Apr</th>
+                            <th>May</th>
+                            <th>Jun</th>
+                            <th>Jul</th>
+                            <th>Aug</th>
+                            <th>Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Total Employees</strong></td>
+                            <td>90</td>
+                            <td>99</td>
+                            <td>85</td>
+                            <td>72</td>
+                            <td>65</td>
+                            <td>71</td>
+                            <td>76</td>
+                            <td class="highlight">89</td>
+                            <td class="trend-up">Strong recovery</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Employees Hired</strong></td>
+                            <td>4</td>
+                            <td>15</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>17</td>
+                            <td class="highlight">27</td>
+                            <td class="trend-up">Record month!</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Employees Started</strong></td>
+                            <td>3</td>
+                            <td>10</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>6</td>
+                            <td>4</td>
+                            <td>8</td>
+                            <td class="highlight">19</td>
+                            <td class="trend-up">Record performance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>New Employee Salaries</strong></td>
+                            <td>$1,544</td>
+                            <td>$4,283</td>
+                            <td>$181</td>
+                            <td>$867</td>
+                            <td>$2,306</td>
+                            <td>$3,084</td>
+                            <td>$5,622</td>
+                            <td class="highlight">$8,898</td>
+                            <td class="trend-up">Highest investment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Departures (%)</strong></td>
+                            <td>5 (5.6%)</td>
+                            <td>10 (10.1%)</td>
+                            <td>16 (18.8%)</td>
+                            <td>13 (18.1%)</td>
+                            <td>2 (3.1%)</td>
+                            <td>12 (16.9%)</td>
+                            <td>6 (7.9%)</td>
+                            <td>10 (11.2%)</td>
+                            <td>Manageable level</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Employees Left (%)</strong></td>
+                            <td>4 (4.4%)</td>
+                            <td>7 (7.1%)</td>
+                            <td>15 (17.6%)</td>
+                            <td>10 (13.9%)</td>
+                            <td>2 (3.1%)</td>
+                            <td>5 (7.0%)</td>
+                            <td>3 (3.9%)</td>
+                            <td>3 (3.4%)</td>
+                            <td class="trend-down">Low turnover</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Employees Fired (%)</strong></td>
+                            <td>1 (1.1%)</td>
+                            <td>3 (3.0%)</td>
+                            <td>1 (1.2%)</td>
+                            <td>3 (4.2%)</td>
+                            <td>0 (0.0%)</td>
+                            <td>7 (9.9%)</td>
+                            <td>3 (3.9%)</td>
+                            <td>7 (7.9%)</td>
+                            <td class="trend-up">Higher than July</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fired from Projects (FiredSync)</strong></td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td class="highlight">4</td>
+                            <td class="trend-up">Project performance focus</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Average Worked Months</strong></td>
+                            <td>6.9</td>
+                            <td>11.2</td>
+                            <td>15.8</td>
+                            <td>10.2</td>
+                            <td>11.0</td>
+                            <td>25.1</td>
+                            <td>8.6</td>
+                            <td>9.8</td>
+                            <td>Stable tenure</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Calls</strong></td>
+                            <td>38</td>
+                            <td>56</td>
+                            <td>37</td>
+                            <td>23</td>
+                            <td>27</td>
+                            <td>19</td>
+                            <td>14</td>
+                            <td>21</td>
+                            <td class="trend-up">50% increase from July</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Leadgen Calls</strong></td>
+                            <td>35</td>
+                            <td>54</td>
+                            <td>36</td>
+                            <td>23</td>
+                            <td>27</td>
+                            <td>19</td>
+                            <td>14</td>
+                            <td>19</td>
+                            <td class="trend-up">36% increase from July</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lead Price</strong></td>
+                            <td>$108</td>
+                            <td>$84</td>
+                            <td>$118</td>
+                            <td>$109</td>
+                            <td>$128</td>
+                            <td>$131</td>
+                            <td>$182</td>
+                            <td>$214</td>
+                            <td class="trend-up">Critical cost increase</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Unique Companies (Sales)</strong></td>
+                            <td>2</td>
+                            <td>5</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>Stable activity</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Unique NEW Companies</strong></td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>Consistent with July</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sales Revenue</strong></td>
+                            <td>$2,231</td>
+                            <td>$5,056</td>
+                            <td>$2,573</td>
+                            <td>$3,911</td>
+                            <td>$6,885</td>
+                            <td>$5,820</td>
+                            <td>$3,048</td>
+                            <td>$5,026</td>
+                            <td class="trend-up">65% increase from July</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Project Profit</strong></td>
+                            <td>$1,542</td>
+                            <td>$4,055</td>
+                            <td>$1,993</td>
+                            <td>$3,097</td>
+                            <td>$5,470</td>
+                            <td>$4,446</td>
+                            <td>$2,548</td>
+                            <td>$4,154</td>
+                            <td class="trend-up">63% increase from July</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Revenue</strong></td>
+                            <td>$42,661</td>
+                            <td>$46,166</td>
+                            <td>$44,235</td>
+                            <td>$39,386</td>
+                            <td>$42,370</td>
+                            <td>$43,329</td>
+                            <td>$44,892</td>
+                            <td>$43,281</td>
+                            <td>Stable performance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Received</strong></td>
+                            <td>$40,966</td>
+                            <td>$39,915</td>
+                            <td>$49,449</td>
+                            <td>$34,487</td>
+                            <td>$55,432</td>
+                            <td>$38,087</td>
+                            <td>$37,845</td>
+                            <td>$46,213</td>
+                            <td class="trend-up">Strong cash inflow</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Balance</strong></td>
+                            <td>-$770</td>
+                            <td>-$1,907</td>
+                            <td>$495</td>
+                            <td>$2,385</td>
+                            <td>$4,221</td>
+                            <td>$5,254</td>
+                            <td>$7,217</td>
+                            <td>$1,358</td>
+                            <td>Positive but decreased</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Salaries Full</strong></td>
+                            <td>$35,513</td>
+                            <td>$36,654</td>
+                            <td>$34,374</td>
+                            <td>$28,610</td>
+                            <td>$27,674</td>
+                            <td>$28,477</td>
+                            <td>$27,517</td>
+                            <td>$35,994</td>
+                            <td class="trend-up">Higher due to growth</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cash Position</strong></td>
+                            <td>-$2,707</td>
+                            <td>-$8,158</td>
+                            <td>$5,709</td>
+                            <td>-$2,514</td>
+                            <td>$17,283</td>
+                            <td>$12</td>
+                            <td>$256</td>
+                            <td class="highlight">$4,290</td>
+                            <td class="trend-up">Strong improvement</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HR Video Candidates</strong></td>
+                            <td>74</td>
+                            <td>56</td>
+                            <td>37</td>
+                            <td>26</td>
+                            <td>40</td>
+                            <td>178</td>
+                            <td>173</td>
+                            <td>164</td>
+                            <td>High volume maintained</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Employee Bonuses USD</strong></td>
+                            <td>$2,897</td>
+                            <td>$3,366</td>
+                            <td>$2,953</td>
+                            <td>$2,633</td>
+                            <td>$2,453</td>
+                            <td>$2,898</td>
+                            <td>$2,454</td>
+                            <td class="highlight">$2,668</td>
+                            <td class="trend-up">Solid bonuses</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <h2 class="section-title">📈 Executive Summary & Strategic Insights</h2>
+            <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 30px;">
+                    
+                    <div style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 25px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.4em;">🔥 August Highlights</h3>
+                        <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li style="margin-bottom: 8px;"><strong>Record Hiring:</strong> 27 new employees hired - 59% more than July!</li>
+                            <li style="margin-bottom: 8px;"><strong>Outstanding Start Rate:</strong> 19 employees started (70% of hired)</li>
+                            <li style="margin-bottom: 8px;"><strong>Team Growth:</strong> From 76 to 89 employees (+17% growth)</li>
+                            <li style="margin-bottom: 8px;"><strong>Strong Revenue:</strong> $5,026 in sales revenue (+65% from July)</li>
+                            <li><strong>Improved Profitability:</strong> $4,154 project profit (+63% from July)</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 25px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.4em;">⚠️ Areas for Improvement</h3>
+                        <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li style="margin-bottom: 8px;"><strong>Lead Cost Spike:</strong> Lead price jumped to $214.27 (highest ever)</li>
+                            <li style="margin-bottom: 8px;"><strong>Higher Firing Rate:</strong> 7 employees (7.9%) vs 3 in July</li>
+                            <li style="margin-bottom: 8px;"><strong>Project Firings:</strong> 4 employees fired from projects (highest)</li>
+                            <li style="margin-bottom: 8px;"><strong>New Company Cost:</strong> $5,417 per new company (very high)</li>
+                            <li><strong>Cash Position:</strong> Decreased from previous months despite growth</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
+                    
+                    <div style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 25px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.4em;">📊 Growth Strategy Impact</h3>
+                        <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li style="margin-bottom: 8px;"><strong>Aggressive Hiring:</strong> 27 hired, 19 started (70% conversion rate)</li>
+                            <li style="margin-bottom: 8px;"><strong>Quality Control:</strong> Higher firing rate may indicate stricter standards</li>
+                            <li style="margin-bottom: 8px;"><strong>Major Investment:</strong> $8,898 in new employee salaries</li>
+                            <li><strong>Sales Recovery:</strong> Revenue and profit both increased significantly</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #f39c12, #d35400); color: white; padding: 25px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 15px; font-size: 1.4em;">💡 Strategic Recommendations</h3>
+                        <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                            <li style="margin-bottom: 8px;"><strong>Lead Cost Optimization:</strong> Urgent need to reduce $214 lead acquisition cost</li>
+                            <li style="margin-bottom: 8px;"><strong>Onboarding Focus:</strong> Support 19 new starters for retention</li>
+                            <li style="margin-bottom: 8px;"><strong>Project Quality:</strong> Investigate high project firing rate (4 employees)</li>
+                            <li><strong>Sales Momentum:</strong> Build on improved sales and profit performance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1)); border-radius: 12px; border-left: 5px solid #3498db;">
+                    <h3 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.4em;">🎯 August 2025 Summary</h3>
+                    <p style="line-height: 1.8; color: #2c3e50; margin: 0;">
+                        August marked a pivotal month with <strong>record-breaking hiring of 27 employees</strong>, with an impressive 19 actually starting work - the highest conversion rate this year. 
+                        The company invested heavily in growth with $8,898 in new salaries while achieving significant improvements in sales revenue (+65% to $5,026) and project profit (+63% to $4,154). 
+                        However, this expansion came with significant challenges: lead acquisition costs spiked to $214.27 (the highest ever) and project-related firings increased to 4 employees. 
+                        The focus should now shift to <strong>successfully integrating 19 new team members</strong> while urgently addressing the unsustainable lead generation costs. 
+                        Despite these challenges, the company maintains a solid cash position of $4,290 and shows strong operational recovery momentum.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart.js configurations
+        Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+        Chart.defaults.color = '#2c3e50';
+
+        // Hiring Trends Chart
+        const hiringCtx = document.getElementById('hiringChart').getContext('2d');
+        new Chart(hiringCtx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'],
+                datasets: [{
+                    label: 'Employees Hired',
+                    data: [4, 15, 1, 3, 6, 7, 17, 27],
+                    borderColor: '#e74c3c',
+                    backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Employees Started',
+                    data: [3, 10, 1, 2, 6, 4, 8, 19],
+                    borderColor: '#f39c12',
+                    backgroundColor: 'rgba(243, 156, 18, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Departures Chart for August
+        const departuresCtx = document.getElementById('departuresChart').getContext('2d');
+        new Chart(departuresCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Employees Left', 'Employees Fired', 'Fired from Projects', 'Active Employees'],
+                datasets: [{
+                    data: [3, 7, 4, 75],
+                    backgroundColor: ['#f39c12', '#e74c3c', '#e67e22', '#27ae60'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [42661, 46166, 44235, 39386, 42370, 43329, 44892, 43281],
+                    backgroundColor: '#27ae60',
+                    borderRadius: 8
+                }, {
+                    label: 'Salaries Full',
+                    data: [35513, 36654, 34374, 28610, 27674, 28477, 27517, 35994],
+                    backgroundColor: '#e74c3c',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Calls Chart
+        const callsCtx = document.getElementById('callsChart').getContext('2d');
+        new Chart(callsCtx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'],
+                datasets: [{
+                    label: 'Total Calls',
+                    data: [38, 56, 37, 23, 27, 19, 14, 21],
+                    borderColor: '#f39c12',
+                    backgroundColor: 'rgba(243, 156, 18, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+HR							
+Number of new employees The number of new employees hired in that month
+Salary of new employees The total salary of the new employees in USD
+Number of new employees Started The number of new employees who started working in that month
+Salary of new employees Started The total salary of the new employees who started in that month.	
+Didn't start or finish the same month	Indicates employees who were hired but didn't start or finish within the same month 
+Recruiter bonuses Total bonus accrued for recruiters for placed employees (who have been with the company for more than 2 weeks).
+
+HR Presale
+Number of candidates Number of placed employees on presale.	
+Recruiter bonuses Total bonus accrued for recruiters for placed employees on presale.
+
+HR costs
+HR Salaries and Bonuses: Total salaries and bonuses for the HR department in this month
+HR Ads and Softs: Costs associated with HR advertising and software.
+Cost per Empl (Started): Cost per employee who started working in this month (calculated by adding the HR Salaries and Bonuses + HR Ads and Softs for this month and dividing by the Number of new employees Started).
+Cost per Empl (all): Cost per employee (including Presale). (Calculated by adding the HR Salaries and Bonuses + HR Ads and Softs for this month and dividing by the Number of new employees Started + Number of candidates).
+
+HRVideo
+Number of candidates: Number of videos collected this month
+Recruiter bonuses: Recruiter bonuses for videos this month
+Cost per Video: Cost per video (add HR Salaries and Bonuses + HR Ads and Softs for this month and divide by the Number of candidates in this section)
+
+tracks the number of new employees, their salaries, and the associated costs for recruitment, including recruiter bonuses, HR salaries, and advertising expenses. The file also calculates the cost per employee hired and the cost per recruitment video.
+
+Fired/Left
+Total: Total number of employees leaving the company.
+%total: Overall percentage of employees who left the company (Total / total number of company employees).
+Left: Number of employees who left voluntarily.
+%left: Percentage of employees who left voluntarily (Left / total number of company employees).
+Fired: Number of employees who were terminated.
+%fired: Percentage of employees who were terminated (Fired / total number of company employees).
+Salary: Total salary amount paid to employees with "Left" and "Fired" status in the month.
+Average worked months: Average number of months worked by employees who left the company.
+Profit: Profit brought to the company by the employees who left.
+
+FiredWeek
+Number of employees: Number of employees who left the company and worked for less than a week.
+Salary: Total salary amount paid to employees who worked for less than a week.
+Salary USD: Total salary amount paid to employees who worked for less than a week, converted to USD.
+Profit: Profit brought to the company by employees who worked for less than a week.
+
+Stream LG
+Time(hours): Total number of stream hours in the month.
+Price: Total amount of bonus accrued for streaming.
+
+Calls
+Total calls: Total number of calls.
+Leadgen calls: Number of calls assigned by the lead generation department.
+Sales managers first calls: Number of calls assigned by sales managers.
+Reengagement calls: Number of calls for client re-engagement.
+Managers' bonuses: Total amount of bonuses accrued for calls.
+Team leads bonuses: Bonuses accrued to team leaders.
+Client: Number of clients acquired after a scheduled call in this month.
+Total Empl: Total number of hired employees.
+Days Call to Client: Number of days from the call to closing a deal with the client.
+Lead Price: Cost of acquiring one lead (sum of salaries of lead generators who worked in the current month + bonuses paid for calls, divided by Total calls).
+Client Price: Cost of acquiring one client (sum of salaries of lead generators who worked in the current month + bonuses paid for calls + salaries of sales and assistants + bonuses of sales and assistants, divided by Sales (unique NEW companies) from the Sales block).
+Client Price 1: Cost of acquiring one client (sum of salaries of lead generators who worked in the current month + bonuses paid for calls + salaries of sales and assistants + bonuses of sales and assistants, divided by Companies from the Sales block).
+
+Sales
+
+Companies: Number of companies that made a purchase.
+Sales (unique NEW companies): Number of unique new companies that made a purchase.
+Hired employees: Number of employees hired.
+Revenue: Total sales amount for this month.
+Sales Bonus SM: Total accrued bonus for sales managers.
+Team leads bonuses: Bonuses for team leaders.
+USD Empl Salary: Total salary amount for hired employees in USD.
+Profit Project: Total profit for projects.
+LeadGen Manager: Number of lead generation managers who had a sale.
+LeadGen Bonus: Total bonus amount for lead generation managers for sales.
+Assistant Bonus: Total bonus amount for assistants.
+
+FiredSync 
+Company: Number of companies that ended cooperation.
+Fired employees on projects: Number of fired employees who worked on projects.
+FiredSync Lost revenue: Revenue lost due to employee terminations.
+FiredSync Lost Profit: Profit lost due to employee terminations.
+Profit gained from employees: Profit gained from the fired employees during their employment.
+Months Worked: Average number of months worked by the fired employees.
+
+Interview
+Company: Number of companies that conducted interviews.
+Employee: Number of employees who were interviewed.
+Status "Hired": Number of hired employees who were interviewed.
+
+Private Entrepreneur
+Amount: Number of opened sole proprietorships 
+Total: Total bonus amount accrued for opened sole proprietorships
+
+Bonus for projects
+Total Total bonus amount accrued this month for project participation
+
+SummarySync	
+Total UAH Total employee bonus amount for the month
+Total USD Total employee bonus amount for the month in USD
+
+Finance
+Revenue: Company income for the specified period (income from sales).
+Total received: Total amount of funds received by the company in the specified period (payments from clients).
+Balance: Difference between revenue, salaries this month and expenses this month.
+Invoices this month: The amount of Invoices issued for the current month that were paid in the same month.
+Salaries USD full: Full amount of salaries accrued for the current month.
+Salaries this month: Total amount of salaries paid to employees in USD for the specified period.
+Cash: Company's cash on hand; Difference between total received, salaries this month and expenses this month.
+Total Pending: The amount of outstanding invoices for all months to date for the period starting from January 2024
+
+
+
+
+

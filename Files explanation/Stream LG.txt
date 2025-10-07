@@ -1,0 +1,3 @@
+﻿Stream LG
+Time(hours): Total number of stream hours in the month.
+Price: Total amount of bonus accrued for streaming.

@@ -1,0 +1,7 @@
+﻿FiredSync 
+Company: Number of companies that ended cooperation.
+Fired employees on projects: Number of fired employees who worked on projects.
+FiredSync Lost revenue: Revenue lost due to employee terminations.
+FiredSync Lost Profit: Profit lost due to employee terminations.
+Profit gained from employees: Profit gained from the fired employees during their employment.
+Months Worked: Average number of months worked by the fired employees.

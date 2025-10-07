@@ -1,0 +1,13 @@
+﻿Calls
+Total calls: Total number of calls.
+Leadgen calls: Number of calls assigned by the lead generation department.
+Sales managers first calls: Number of calls assigned by sales managers.
+Reengagement calls: Number of calls for client re-engagement.
+Managers' bonuses: Total amount of bonuses accrued for calls.
+Team leads bonuses: Bonuses accrued to team leaders.
+Client: Number of clients acquired after a scheduled call in this month.
+Total Empl: Total number of hired employees.
+Days Call to Client: Number of days from the call to closing a deal with the client.
+Lead Price: Cost of acquiring one lead (sum of salaries of lead generators who worked in the current month + bonuses paid for calls, divided by Total calls).
+Client Price: Cost of acquiring one client (sum of salaries of lead generators who worked in the current month + bonuses paid for calls + salaries of sales and assistants + bonuses of sales and assistants, divided by Sales (unique NEW companies) from the Sales block).
+Client Price 1: Cost of acquiring one client (sum of salaries of lead generators who worked in the current month + bonuses paid for calls + salaries of sales and assistants + bonuses of sales and assistants, divided by Companies from the Sales block).

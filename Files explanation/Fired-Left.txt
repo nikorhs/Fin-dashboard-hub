@@ -1,0 +1,17 @@
+﻿Fired/Left
+Total: Total number of employees leaving the company.
+%total: Overall percentage of employees who left the company (Total / total number of company employees).
+Left: Number of employees who left voluntarily.
+%left: Percentage of employees who left voluntarily (Left / total number of company employees).
+Fired: Number of employees who were terminated.
+%fired: Percentage of employees who were terminated (Fired / total number of company employees).
+Salary: Total salary amount paid to employees with "Left" and "Fired" status in the month.
+Average worked months: Average number of months worked by employees who left the company.
+Profit: Profit brought to the company by the employees who left ("Profit"  indicator shows the total profit for all dismissed employees for the entire period of their work in the company, and some could have a negative, some a positive, but this final figure shows whether they were profitable)
+
+
+FiredWeek
+Number of employees: Number of employees who left the company and worked for less than a week.
+Salary: Total salary amount paid to employees who worked for less than a week.
+Salary USD: Total salary amount paid to employees who worked for less than a week, converted to USD.
+Profit: Profit brought to the company by employees who worked for less than a week.

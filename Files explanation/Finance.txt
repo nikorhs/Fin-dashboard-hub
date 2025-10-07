@@ -1,0 +1,9 @@
+﻿Finance
+Revenue: Company income for the specified period (income from sales).
+Total received: Total amount of funds received by the company in the specified period (payments from clients).
+Balance: Difference between revenue, salaries this month and expenses this month.
+Invoices this month: The amount of Invoices issued for the current month that were paid in the same month.
+Salaries USD full: Full amount of salaries accrued for the current month.
+Salaries this month: Total amount of salaries paid to employees in USD for the specified period.
+Cash: Company's cash on hand; Difference between total received, salaries this month and expenses this month.
+Total Pending: The amount of outstanding invoices for all months to date for the period starting from January 2024

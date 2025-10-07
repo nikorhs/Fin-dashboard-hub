@@ -1,0 +1,3 @@
+﻿SummarySync        
+Total UAH Total employee bonus amount for the month
+Total USD Total employee bonus amount for the month in USD
